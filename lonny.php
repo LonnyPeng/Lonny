@@ -17,10 +17,32 @@ use Plugin\Http;
 use Plugin\Func;
 use Plugin\Translate;
 use Plugin\RSA AS RSA;
-use PHPExcel;
+use Plugin\PHPExcel;
+use Plugin\Curl AS Curl;
 
 Http::mimeType("html", "UTF-8");
 
-print_r(Func::bankCardInfo('6222600260001072444'));die;
+$urlInfo1 = array(
+	'url' => 'www.word.com/web.php',
+	'params' => array(
+		'content' => 'header',
+	),
+);
+$urlInfo2 = array(
+	'url' => 'www.word.com/web.php',
+	'params' => array(
+		'header' => Curl::header('json'),
+	),
+);
+
+$urlInfos = array($urlInfo1, $urlInfo2);
+for($i=0;$i<100;$i++) {
+	$urlInfos[] = $urlInfo1;
+}
+
+
+$result = Curl::postMulti($urlInfos);
+
+print_r($result);die;
 
 echo "Lonny";
